@@ -1,7 +1,16 @@
-import "./App.css";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+import Main from "./layout/Main";
+import classes from "./App.module.css";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className={classes.app}>
+      <Header />
+      <Main></Main>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;
