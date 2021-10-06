@@ -1,0 +1,9 @@
+.name--container {
+  width: 80%;
+  height: 50px;
+  background-color: yellow;
+  clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 10% 100%);
+  margin-top: -10px;
+  margin-left: auto;
+  z-index: 1;
+}

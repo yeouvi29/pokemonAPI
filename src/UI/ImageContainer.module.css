@@ -1,0 +1,8 @@
+.image--container {
+  width: 200px;
+  height: 150px;
+  border-radius: 50px;
+  position: relative;
+  margin-left: 5px;
+  z-index: 2;
+}

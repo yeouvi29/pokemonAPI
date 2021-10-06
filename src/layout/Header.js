@@ -3,7 +3,7 @@ import classes from "./Header.module.css";
 const Header = () => {
   return (
     <div className={classes.header}>
-      <div>Pokemon</div>
+      <h1 className={classes.logo}>Pokemon</h1>
       <nav>
         <ul>
           <li>Menu</li>
