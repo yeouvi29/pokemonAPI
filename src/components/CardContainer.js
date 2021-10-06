@@ -1,13 +1,13 @@
-import ImageContainer from "./ImageContainer";
-import NameContainer from "./NameContainer";
+import ImageContainer from "../UI/ImageContainer";
+import NameContainer from "../UI/NameContainer";
 
 import classes from "./CardContainer.module.css";
 
 const CardContainer = () => {
   return (
     <div className={classes["card--container"]}>
-      <ImageContainer />
-      <NameContainer />
+      <ImageContainer></ImageContainer>
+      <NameContainer></NameContainer>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import CardContainer from "../UI/CardContainer";
+import CardContainer from "../components/CardContainer";
 import classes from "./Main.module.css";
 
 const Main = (props) => {
