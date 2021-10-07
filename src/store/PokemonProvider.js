@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import PokemonContext from "./pokemon-context";
 
 const defaultState = {
+  url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
   name: { count: 0, next: "", previous: "", results: [] },
   pokemonData: [],
   isNew: true,
@@ -12,7 +13,12 @@ const defaultState = {
 };
 
 const pokemonReducer = (state, action) => {
-  if (action.type === "GET_NAME") {
+  if (action.type === "ADD_URL") {
+    return {
+      ...state,
+      url: action.payload,
+    };
+  } else if (action.type === "GET_NAME") {
     return {
       ...state,
       name: action.payload,
@@ -68,6 +74,10 @@ const PokemonProvider = (props) => {
     defaultState
   );
 
+  const addUrlHandler = (url) => {
+    dispatchInfoAction({ type: "ADD_URL", payload: url });
+  };
+
   const addNamesHandler = (name) => {
     dispatchInfoAction({ type: "GET_NAME", payload: name });
   };
@@ -83,12 +93,14 @@ const PokemonProvider = (props) => {
   };
 
   const pokemonContext = {
+    url: infoState.url,
     name: infoState.name,
     pokemonData: infoState.pokemonData,
     isNew: infoState.isNew,
     loading: infoState.loading,
     error: infoState.error,
     getInfos: infoState.getInfos,
+    setUrl: addUrlHandler,
     addPokemons: addNamesHandler,
     addInfos: addInfosHandler,
     handleStatus: statusHandler,
