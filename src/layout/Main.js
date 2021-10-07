@@ -1,6 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import Pokedex from "../components/Pokedex";
 import PokemonContext from "../store/pokemon-context";
+import chevronLeft from "./../assets/chevron-thin-left.svg";
+import chevronRight from "./../assets/chevron-thin-right.svg";
 import classes from "./Main.module.css";
 
 const Main = () => {
@@ -28,15 +30,14 @@ const Main = () => {
     };
   };
 
-  const clickHandler = (e) => {
-    let getUrl;
-    if (e.target.textContent === "next") {
-      getUrl = pokemonCtx.name.next;
-    } else if (e.target.textContent === "prev") {
-      getUrl = pokemonCtx.name.previous;
-    }
+  const prevClickHandler = () => {
     pokemonCtx.handleClick();
-    setUrl(getUrl);
+    setUrl(pokemonCtx.name.previous);
+  };
+
+  const nextClickHandler = () => {
+    pokemonCtx.handleClick();
+    setUrl(pokemonCtx.name.next);
   };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const Main = () => {
       try {
         const data = await fetchData(url);
 
-        console.log("name", data);
+        // console.log("name", data);
         pokemonCtx.addName(data);
 
         if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
@@ -58,7 +59,7 @@ const Main = () => {
       const newData = await Promise.all(
         pokemonCtx.name.results.map(async (data) => {
           const getData = await fetchIdAndTypes(data.url);
-          console.log("getData", getData);
+          // console.log("getData", getData);
           return {
             id: getData.id,
             name: getData.name,
@@ -67,7 +68,7 @@ const Main = () => {
           };
         })
       );
-      console.log("newData", newData);
+      // console.log("newData", newData);
       pokemonCtx.addInfos(newData);
     };
     if (pokemonCtx.isNew) {
@@ -79,16 +80,16 @@ const Main = () => {
   return (
     <div className={classes.main}>
       {pokemonCtx.name.previous && (
-        <button className={classes.buttons} onClick={clickHandler}>
-          prev
+        <button className={classes.buttons} onClick={prevClickHandler}>
+          <img className={classes.arrow} src={chevronLeft} alt="arrow-left" />
         </button>
       )}
       <div className={classes["cards--container"]}>
         <Pokedex data={pokemonCtx.pokemonData} />
       </div>
       {pokemonCtx.name.next && (
-        <button className={classes.buttons} onClick={clickHandler}>
-          next
+        <button className={classes.buttons} onClick={nextClickHandler}>
+          <img className={classes.arrow} src={chevronRight} alt="arrow-right" />
         </button>
       )}
     </div>
