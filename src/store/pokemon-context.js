@@ -1,8 +1,14 @@
 import React from "react";
 
-const PokeomnContext = React.createContext({
+const PokemonContext = React.createContext({
   name: [],
   pokemonData: [],
+  loading: false,
+  error: "",
+  getInfos: false,
+  addName: (name) => {},
+  addInfos: (data) => {},
+  handleStatus: (status, err) => {},
 });
 
-export default PokeomnContext;
+export default PokemonContext;

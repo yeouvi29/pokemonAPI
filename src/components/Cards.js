@@ -1,4 +1,4 @@
-import Card from "./PokemonImage";
+import Card from "./PokemonName";
 import "./Cards.module.css";
 
 const Cards = (props) => {

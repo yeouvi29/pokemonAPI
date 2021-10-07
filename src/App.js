@@ -1,3 +1,4 @@
+import { Switch, Route } from "react-router-dom";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
 import Main from "./layout/Main";
@@ -6,13 +7,13 @@ import classes from "./App.module.css";
 
 function App() {
   return (
-    <div className={classes.app}>
-      <PokemonProvider>
+    <PokemonProvider>
+      <div className={classes.app}>
         <Header />
         <Main />
         <Footer />
-      </PokemonProvider>
-    </div>
+      </div>
+    </PokemonProvider>
   );
 }
 

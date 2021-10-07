@@ -1,14 +1,13 @@
-import CardContainer from "../components/CardContainer";
+import Pokedex from "../components/Pokedex";
 import classes from "./Main.module.css";
 
-const Main = (props) => {
-  const cards = new Array(20)
-    .fill("")
-    .map((card, i) => <CardContainer key={i} />);
+const Main = () => {
   return (
     <div className={classes.main}>
       <button className={classes.buttons}>prev</button>
-      <div className={classes["cards--container"]}>{cards}</div>
+      <div className={classes["cards--container"]}>
+        <Pokedex />
+      </div>
       <button className={classes.buttons}>next</button>
     </div>
   );

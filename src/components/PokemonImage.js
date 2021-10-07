@@ -1,13 +1,16 @@
-import "./Card.module.css";
+import { Fragment } from "react";
 
-const Card = (props) => {
+import classes from "./PokemonImage.module.css";
+const PokemonImage = (props) => {
   return (
-    <div>
-      <img src={props.url} alt={props.name} />
-      <h3>{props.name}</h3>
-      <p>{props.description}</p>
-    </div>
+    <Fragment>
+      <img
+        className={classes["pokemon--image"]}
+        src={props.src}
+        alt={props.name}
+      />
+    </Fragment>
   );
 };
 
-export default Card;
+export default PokemonImage;
