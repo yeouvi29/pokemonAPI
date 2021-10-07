@@ -3,8 +3,9 @@ import { useReducer } from "react";
 import PokemonContext from "./pokemon-context";
 
 const defaultState = {
-  name: [],
+  name: { count: 0, next: "", previous: "", results: [] },
   pokemonData: [],
+  isNew: true,
   loading: false,
   error: "",
   getInfos: false,
@@ -20,7 +21,8 @@ const pokemonReducer = (state, action) => {
     // }
     return {
       ...state,
-      name: [...action.payload],
+      name: action.payload,
+      isNew: false,
       getInfos: true,
     };
   } else if (action.type === "GET_INFO") {
@@ -30,6 +32,11 @@ const pokemonReducer = (state, action) => {
       ...state,
       pokemonData: [...action.payload],
       getInfos: false,
+    };
+  } else if (action.type === "CLICK") {
+    return {
+      ...state,
+      isNew: true,
     };
   } else if (action.type === "STATUS") {
     if (action.payload === "start") {
@@ -72,16 +79,21 @@ const PokemonProvider = (props) => {
   const statusHandler = (status, error) => {
     dispatchInfoAction({ type: "STATUS", payload: status, error });
   };
+  const clickHandler = () => {
+    dispatchInfoAction({ type: "CLICK" });
+  };
 
   const pokemonContext = {
     name: infoState.name,
     pokemonData: infoState.pokemonData,
+    isNew: infoState.isNew,
     loading: infoState.loading,
     error: infoState.error,
     getInfos: infoState.getInfos,
     addName: addNamesHandler,
     addInfos: addInfosHandler,
     handleStatus: statusHandler,
+    handleClick: clickHandler,
   };
   return (
     <PokemonContext.Provider value={pokemonContext}>
