@@ -56,20 +56,26 @@ const Main = () => {
     };
 
     const fetchId = async () => {
-      const newData = await Promise.all(
-        pokemonCtx.name.results.map(async (data) => {
-          const getData = await fetchIdAndTypes(data.url);
-          // console.log("getData", getData);
-          return {
-            id: getData.id,
-            name: getData.name,
-            type: getData.getTypes,
-            img: getData.imgUrl,
-          };
-        })
-      );
-      // console.log("newData", newData);
-      pokemonCtx.addInfos(newData);
+      try {
+        // if (!pokemonCtx.loading) pokemonCtx.handleStatus("start");
+        const newData = await Promise.all(
+          pokemonCtx.name.results.map(async (data) => {
+            const getData = await fetchIdAndTypes(data.url);
+            // console.log("getData", getData);
+            return {
+              id: getData.id,
+              name: getData.name,
+              type: getData.getTypes,
+              img: getData.imgUrl,
+            };
+          })
+        );
+        // console.log("newData", newData);
+        pokemonCtx.addInfos(newData);
+        if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
+      } catch (err) {
+        pokemonCtx.handleStatus("error", err.message);
+      }
     };
     if (pokemonCtx.isNew) {
       getNames(url);
