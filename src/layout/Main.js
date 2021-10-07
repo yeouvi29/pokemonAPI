@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import Pokedex from "../components/Pokedex";
 import PokemonContext from "../store/pokemon-context";
-import chevronLeft from "./../assets/chevron-thin-left.svg";
-import chevronRight from "./../assets/chevron-thin-right.svg";
+import chevronLeft from "./../assets/chevron-thin-left.png";
+import chevronRight from "./../assets/chevron-thin-right.png";
 import classes from "./Main.module.css";
 
 const Main = () => {
@@ -81,7 +81,7 @@ const Main = () => {
     <div className={classes.main}>
       {pokemonCtx.name.previous && (
         <button className={classes.buttons} onClick={prevClickHandler}>
-          <img className={classes.arrow} src={chevronLeft} alt="arrow-left" />
+          <i className={`fas fa-chevron-left ${classes.arrow}`}></i>
         </button>
       )}
       <div className={classes["cards--container"]}>
@@ -89,7 +89,7 @@ const Main = () => {
       </div>
       {pokemonCtx.name.next && (
         <button className={classes.buttons} onClick={nextClickHandler}>
-          <img className={classes.arrow} src={chevronRight} alt="arrow-right" />
+          <i className={`fas fa-chevron-right ${classes.arrow}`}></i>
         </button>
       )}
     </div>

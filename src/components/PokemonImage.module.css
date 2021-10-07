@@ -2,3 +2,8 @@
   width: 100%;
   height: 100%;
 }
+
+.question {
+  align-self: center;
+  font-size: 3rem;
+}

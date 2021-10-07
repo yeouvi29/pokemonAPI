@@ -30,8 +30,7 @@
 }
 
 .arrow {
-  width: 50px;
-  fill: #fff;
-  background-color: green;
-  border-radius: 50%;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
 }
