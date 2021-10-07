@@ -1,3 +1,4 @@
+import { memo } from "react";
 import randomColor from "randomcolor";
 
 import classes from "./ImageContainer.module.css";
@@ -15,4 +16,4 @@ const ImageContainer = (props) => {
   );
 };
 
-export default ImageContainer;
+export default memo(ImageContainer);

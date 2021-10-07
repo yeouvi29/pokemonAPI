@@ -24,7 +24,7 @@ const PokemonCard = (props) => {
           <PokemonImage imgUrl={props.imgUrl} name={props.name} />
         )}
       </ImageContainer>
-      <NameContainer>
+      <NameContainer id={props.id}>
         <PokemonName name={props.name} />
       </NameContainer>
     </div>

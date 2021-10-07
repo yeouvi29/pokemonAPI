@@ -18,19 +18,29 @@ const Main = () => {
 
   return (
     <div className={classes.main}>
-      {pokemonCtx.name.previous && (
-        <button className={classes.buttons} onClick={prevClickHandler}>
-          <i className={`fas fa-chevron-left ${classes.arrow}`}></i>
-        </button>
-      )}
+      <button
+        className={`${classes.buttons}  ${classes["button-left"]}`}
+        onClick={prevClickHandler}
+      >
+        {pokemonCtx.name.previous && (
+          <i
+            className={`fas fa-chevron-left ${classes.arrow} ${classes["arrow-left"]}`}
+          ></i>
+        )}
+      </button>
 
       <Pokedex data={pokemonCtx.pokemonData} />
 
-      {pokemonCtx.name.next && (
-        <button className={classes.buttons} onClick={nextClickHandler}>
-          <i className={`fas fa-chevron-right ${classes.arrow}`}></i>
-        </button>
-      )}
+      <button
+        className={`${classes.buttons}  ${classes["button-right"]}`}
+        onClick={nextClickHandler}
+      >
+        {pokemonCtx.name.next && (
+          <i
+            className={`fas fa-chevron-right ${classes.arrow} ${classes["arrow-right"]}`}
+          ></i>
+        )}
+      </button>
     </div>
   );
 };

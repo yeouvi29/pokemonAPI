@@ -8,7 +8,7 @@ const Pokedex = (props) => {
   const pokemonCtx = useContext(PokemonContext);
 
   const pokemonDatas = props.data.map((data, i) => (
-    <PokemonCard key={i} name={data.name} imgUrl={data.imgUrl} />
+    <PokemonCard key={i} name={data.name} imgUrl={data.imgUrl} id={data.id} />
   ));
 
   const fetchJSONData = useCallback(async (url) => {
@@ -84,7 +84,11 @@ const Pokedex = (props) => {
     if (pokemonCtx.getInfos && !pokemonCtx.loading) fetchPokemonsInfo();
   }, [fetchJSONData, pokemonCtx, getPokemonData]);
 
-  return <div className={classes["cards--container"]}>{pokemonDatas}</div>;
+  return (
+    <div className={classes["cards--container"]}>
+      <div className={classes["cards--container-inner"]}>{pokemonDatas}</div>
+    </div>
+  );
 };
 
 export default Pokedex;
