@@ -9,6 +9,10 @@ import classes from "./PokemonCard.module.css";
 const PokemonCard = (props) => {
   const pokemonCtx = useContext(PokemonContext);
   console.log("loading", pokemonCtx.loading);
+
+  // const clickHandler = () => {
+  //   pokemonCtx.showDetail();
+  // };
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>

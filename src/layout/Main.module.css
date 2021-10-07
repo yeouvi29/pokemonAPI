@@ -7,20 +7,6 @@
   align-items: center;
   margin-top: 100px;
   box-sizing: border-box;
-
-}
-
-.cards--container {
-  grid-column: 2 / 3;
-  width: 80%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: auto;
 }
 
 .buttons {

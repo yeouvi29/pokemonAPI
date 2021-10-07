@@ -89,7 +89,7 @@ const PokemonProvider = (props) => {
     loading: infoState.loading,
     error: infoState.error,
     getInfos: infoState.getInfos,
-    addName: addNamesHandler,
+    addPokemons: addNamesHandler,
     addInfos: addInfosHandler,
     handleStatus: statusHandler,
     handleClick: clickHandler,

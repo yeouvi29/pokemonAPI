@@ -1,8 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import Pokedex from "../components/Pokedex";
 import PokemonContext from "../store/pokemon-context";
-import chevronLeft from "./../assets/chevron-thin-left.png";
-import chevronRight from "./../assets/chevron-thin-right.png";
 import classes from "./Main.module.css";
 
 const Main = () => {
@@ -10,25 +8,32 @@ const Main = () => {
     "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
   );
   const pokemonCtx = useContext(PokemonContext);
-  const fetchData = useCallback(async (url) => {
+
+  const fetchJSONData = useCallback(async (url) => {
     const res = await fetch(url);
     const data = await res.json();
     return data;
   }, []);
-  const fetchIdAndTypes = async (url) => {
+
+  const getPokemonData = useCallback(async (url) => {
     const res = await fetch(url);
     const data = await res.json();
-    const { id, name, types } = data;
+    const { id, name, height, weight, types, species, abilities } = data;
     // console.log("data", data);
     const getTypes = await types.map((data) => data.type.name);
+    const getAbilities = await abilities.map((data) => data.ability.name);
     // console.log("id", id, name, getTypes);
     return {
       id,
       name,
       getTypes,
+      getAbilities,
+      height,
+      weight,
+      species: species.name,
       imgUrl: data.sprites.other["official-artwork"]["front_default"],
     };
-  };
+  }, []);
 
   const prevClickHandler = () => {
     pokemonCtx.handleClick();
@@ -41,13 +46,13 @@ const Main = () => {
   };
 
   useEffect(() => {
-    const getNames = async (url) => {
+    const getPokemons = async (url) => {
       if (!pokemonCtx.loading) pokemonCtx.handleStatus("start");
       try {
-        const data = await fetchData(url);
+        const data = await fetchJSONData(url);
 
         // console.log("name", data);
-        pokemonCtx.addName(data);
+        pokemonCtx.addPokemons(data);
 
         if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
       } catch (err) {
@@ -55,22 +60,26 @@ const Main = () => {
       }
     };
 
-    const fetchId = async () => {
+    const fetchPokemonsInfo = async () => {
       try {
         // if (!pokemonCtx.loading) pokemonCtx.handleStatus("start");
         const newData = await Promise.all(
           pokemonCtx.name.results.map(async (data) => {
-            const getData = await fetchIdAndTypes(data.url);
-            // console.log("getData", getData);
+            const pokemonData = await getPokemonData(data.url);
+            // console.log("pokemonData", pokemonData);
             return {
-              id: getData.id,
-              name: getData.name,
-              type: getData.getTypes,
-              img: getData.imgUrl,
+              id: pokemonData.id,
+              name: pokemonData.name,
+              type: pokemonData.getTypes,
+              img: pokemonData.imgUrl,
+              abilities: pokemonData.getAbilities,
+              height: pokemonData.height,
+              weight: pokemonData.weight,
+              species: pokemonData.species,
             };
           })
         );
-        // console.log("newData", newData);
+        console.log("newData", newData);
         pokemonCtx.addInfos(newData);
         if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
       } catch (err) {
@@ -78,10 +87,10 @@ const Main = () => {
       }
     };
     if (pokemonCtx.isNew) {
-      getNames(url);
+      getPokemons(url);
     }
-    if (pokemonCtx.getInfos && !pokemonCtx.loading) fetchId();
-  }, [fetchData, pokemonCtx, url]);
+    if (pokemonCtx.getInfos && !pokemonCtx.loading) fetchPokemonsInfo();
+  }, [fetchJSONData, pokemonCtx, url, getPokemonData]);
 
   return (
     <div className={classes.main}>
@@ -90,9 +99,9 @@ const Main = () => {
           <i className={`fas fa-chevron-left ${classes.arrow}`}></i>
         </button>
       )}
-      <div className={classes["cards--container"]}>
-        <Pokedex data={pokemonCtx.pokemonData} />
-      </div>
+
+      <Pokedex data={pokemonCtx.pokemonData} />
+
       {pokemonCtx.name.next && (
         <button className={classes.buttons} onClick={nextClickHandler}>
           <i className={`fas fa-chevron-right ${classes.arrow}`}></i>

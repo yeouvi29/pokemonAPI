@@ -7,7 +7,7 @@ const PokemonContext = React.createContext({
   loading: false,
   error: "",
   getInfos: false,
-  addName: (name) => {},
+  addPokemons: (name) => {},
   addInfos: (data) => {},
   handleStatus: (status, err) => {},
   handleClick: () => {},
