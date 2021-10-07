@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 
 import classes from "./PokemonImage.module.css";
+
 const PokemonImage = (props) => {
   return (
     <Fragment>

@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect } from "react";
+
 import PokemonCard from "./PokemonCard";
 import PokemonContext from "../store/pokemon-context";
 import classes from "./Pokedex.module.css";

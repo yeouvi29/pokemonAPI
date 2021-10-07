@@ -57,6 +57,7 @@ const pokemonReducer = (state, action) => {
         loading: false,
       };
     } else if (action.payload === "fail") {
+      console.log(action.error);
       return {
         ...state,
         loading: false,
