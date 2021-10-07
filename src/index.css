@@ -12,3 +12,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.buttons {
+  align-self: center;
+  width: 50%;
+  height: 80px;
+  background-color: transparent;
+  border: none;
+  position: fixed;
+  bottom: 0;
+  z-index: 50;
+  background-color: #000;
+}
+
+.buttons:hover .arrow,
+.buttons:active .arrow {
+  color: grey;
+}
+
+.arrow {
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (min-width: 600px) {
+  .buttons {
+    position: relative;
+  }
+}

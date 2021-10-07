@@ -14,24 +14,6 @@
   box-sizing: border-box;
 }
 
-
-.buttons {
-  align-self: center;
-  width: 50%;
-  height: 80px;
-  background-color: transparent;
-  border: none;
-  position: fixed;
-  bottom: 0;
-  z-index: 50;
-  background-color: #000;
-}
-
-.buttons:hover .arrow,
-.buttons:active .arrow {
-  color: grey;
-}
-
 .button-left {
   left: 0;
   grid-area: btn-left;
@@ -41,13 +23,6 @@
   right: 0;
   grid-area: btn-right;
 }
-
-.arrow {
-  font-size: 3rem;
-  color: #fff;
-  cursor: pointer;
-}
-
 
 @media (min-width: 600px) {
   .main {

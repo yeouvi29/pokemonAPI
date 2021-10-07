@@ -1,4 +1,6 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
+
+import Button from "../UI/Button";
 import Pokedex from "../components/Pokedex";
 import PokemonContext from "../store/pokemon-context";
 import classes from "./Main.module.css";
@@ -18,31 +20,25 @@ const Main = () => {
 
   return (
     <div className={classes.main}>
-      <button
-        className={`${classes.buttons}  ${classes["button-left"]}`}
-        onClick={prevClickHandler}
-      >
+      <Button className={classes["button-left"]} onClick={prevClickHandler}>
         {pokemonCtx.name.previous && (
           <i
-            className={`fas fa-chevron-left ${classes.arrow} ${classes["arrow-left"]}`}
+            className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
           ></i>
         )}
-      </button>
+      </Button>
 
       <Pokedex data={pokemonCtx.pokemonData} />
 
-      <button
-        className={`${classes.buttons}  ${classes["button-right"]}`}
-        onClick={nextClickHandler}
-      >
+      <Button className={classes["button-right"]} onClick={nextClickHandler}>
         {pokemonCtx.name.next && (
           <i
-            className={`fas fa-chevron-right ${classes.arrow} ${classes["arrow-right"]}`}
+            className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
           ></i>
         )}
-      </button>
+      </Button>
     </div>
   );
 };
 
-export default Main;
+export default memo(Main);
