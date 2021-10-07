@@ -10,7 +10,7 @@ const PokemonCard = (props) => {
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>
-        <PokemonImage src={props.src} name={props.name} />
+        <PokemonImage imgUrl={props.imgUrl} name={props.name} />
       </ImageContainer>
       <NameContainer>
         <PokemonName name={props.name} />

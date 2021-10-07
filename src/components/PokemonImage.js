@@ -6,7 +6,7 @@ const PokemonImage = (props) => {
     <Fragment>
       <img
         className={classes["pokemon--image"]}
-        src={props.src}
+        src={props.imgUrl}
         alt={props.name}
       />
     </Fragment>

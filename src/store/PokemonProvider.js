@@ -12,23 +12,23 @@ const defaultState = {
 
 const pokemonReducer = (state, action) => {
   if (action.type === "GET_NAME") {
-    const updatedName = [];
-    console.log("isloading", state.loading);
-    if (!state.name.length) {
-      action.payload.forEach((data) => updatedName.push(data));
-      console.log("updatedName", updatedName, action);
-    }
+    // const updatedName = [];
+    // console.log("isloading", state.loading);
+    // if (!state.name.length) {
+    //   action.payload.forEach((data) => updatedName.push(data));
+    //   console.log("updatedName", updatedName, action);
+    // }
     return {
       ...state,
-      name: [...state.name, ...updatedName],
+      name: [...action.payload],
       getInfos: true,
     };
   } else if (action.type === "GET_INFO") {
-    const updatedInfos = [];
-    action.payload.forEach((data) => updatedInfos.push(data));
+    // const updatedInfos = [];
+    // action.payload.forEach((data) => updatedInfos.push(data));
     return {
       ...state,
-      pokemonData: [...updatedInfos],
+      pokemonData: [...action.payload],
       getInfos: false,
     };
   } else if (action.type === "STATUS") {
