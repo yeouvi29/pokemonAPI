@@ -34,7 +34,7 @@ const Main = () => {
     // console.log("id", id, name, getTypes);
     return {
       id,
-      name,
+      name: name[0].toUpperCase() + name.slice(1),
       getTypes,
       getAbilities,
       height,
@@ -79,7 +79,6 @@ const Main = () => {
       // console.log("getpokemon data start");
       try {
         setStatus("LOADING");
-        setPokemonsData([]);
         const pokemonsInfo = await Promise.all(
           names.map(async (data) => {
             const pokemonData = await getPokemonData(data.url);
@@ -98,7 +97,7 @@ const Main = () => {
         );
 
         setPokemonsData(pokemonsInfo);
-        setStatus("COMPLETE");
+        // setStatus("COMPLETE");
 
         // console.log("pokemonsData", pokemonsInfo);
       } catch (err) {
@@ -120,7 +119,7 @@ const Main = () => {
         {/* )} */}
       </Button>
 
-      <Pokedex pokemonsData={pokemonsData} isLoading={status} />
+      <Pokedex pokemonsData={pokemonsData} />
 
       <Button className={classes["button-right"]} onClick={nextClickHandler}>
         {/* {next && ( */}
