@@ -9,23 +9,21 @@ const Main = () => {
   const [url, setUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
   );
-  const [prev, setPrev] = useState("");
-  const [next, setNext] = useState("");
-  const [names, setNames] = useState([]);
+  const [names, setNames] = useState({ next: "", prev: "", results: [] });
 
   console.log("main is rendering");
 
   const prevClickHandler = useCallback(() => {
     console.log("prev clicked");
     setIsFetching(true);
-    setUrl(prev);
-  }, [prev]);
+    setUrl(names.prev);
+  }, [names.prev]);
 
   const nextClickHandler = useCallback(() => {
     console.log("next clicked");
     setIsFetching(true);
-    setUrl(next);
-  }, [next]);
+    setUrl(names.next);
+  }, [names.next]);
 
   useEffect(() => {
     const getPokemons = async (url) => {
@@ -34,9 +32,12 @@ const Main = () => {
         fetch(url)
           .then((res) => res.json())
           .then((data) => {
-            setNames(data.results);
-            setPrev(data.previous);
-            setNext(data.next);
+            setNames({
+              next: data.next,
+              prev: data.prev,
+              results: data.results,
+            });
+
             setIsFetching(false);
           });
       } catch (err) {
@@ -55,21 +56,21 @@ const Main = () => {
         name="prev"
         onClick={prevClickHandler}
       >
-        {prev && (
+        {names.prev && (
           <i
             className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
           ></i>
         )}
       </Button>
 
-      <Pokedex names={names} />
+      <Pokedex names={names.results} />
 
       <Button
         className={classes["button-right"]}
         name="next"
         onClick={nextClickHandler}
       >
-        {next && (
+        {names.next && (
           <i
             className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
           ></i>
