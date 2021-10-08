@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useCallback, Fragment } from "react";
+import { memo, useEffect, useState, Fragment } from "react";
 
 import ImageContainer from "../UI/ImageContainer";
 import NameContainer from "../UI/NameContainer";
@@ -28,7 +28,7 @@ const PokemonCard = (props) => {
             const types = data.types.map((data) =>
               data.type.name.toLowerCase()
             );
-            return {
+            setPokemonData({
               name: data.name[0].toUpperCase() + data.name.slice(1),
               imgUrl: data.sprites.other["official-artwork"]["front_default"],
               id: data.id,
@@ -36,20 +36,8 @@ const PokemonCard = (props) => {
               height: data.height,
               weight: data.weight,
               species: data.species.name,
-            };
-          })
-          .then((data) => {
-            return {
-              name: data.name,
-              imgUrl: data.imgUrl,
-              id: data.id,
-              types: data.types,
-              height: data.height,
-              weight: data.weight,
-              species: data.species,
-            };
-          })
-          .then((data) => setPokemonData(data));
+            });
+          });
       } catch (err) {
         console.log(err.message);
       }
@@ -71,7 +59,7 @@ const PokemonCard = (props) => {
         className={classes["card--container"]}
         onClick={showPokemonInfoHandler}
       >
-        <ImageContainer>
+        <ImageContainer color={props.color}>
           <PokemonImage imgUrl={pokemonData.imgUrl} name={pokemonData.name} />
         </ImageContainer>
         <NameContainer>

@@ -1,10 +1,11 @@
+import randomColor from "randomcolor";
 import PokemonCard from "./PokemonCard";
 
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
   const pokemonDatas = props.pokedexData.map((data, i) => (
-    <PokemonCard key={i} url={data.url} />
+    <PokemonCard color={randomColor()} key={i} url={data.url} />
   ));
 
   return (
