@@ -1,4 +1,4 @@
-import { useContext, memo, useState } from "react";
+import { memo, useState, useEffect, useCallback } from "react";
 
 import Button from "../UI/Button";
 import Pokedex from "../components/Pokedex";
@@ -6,54 +6,114 @@ import PokemonContext from "../store/pokemon-context";
 import classes from "./Main.module.css";
 
 const Main = () => {
-  const [isNew, setIsNew] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [getNewData, setGetNewData] = useState(false);
-  const pokemonCtx = useContext(PokemonContext);
+  const [status, setStatus] = useState("NEW");
+  const [url, setUrl] = useState("");
+  const [names, setNames] = useState({
+    count: 0,
+    next: "",
+    previous: "",
+    results: [],
+  });
+  const [pokemonsData, setPokemonsData] = useState([]);
+
+  const fetchJSONData = useCallback(async (url) => {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data;
+  }, []);
+
+  const getPokemonData = useCallback(async (url) => {
+    const res = await fetch(url);
+    const data = await res.json();
+    const { id, name, height, weight, types, species, abilities } = data;
+    // console.log("data", data);
+    const getTypes = await types.map((data) => data.type.name);
+    const getAbilities = await abilities.map((data) => data.ability.name);
+    // console.log("id", id, name, getTypes);
+    return {
+      id,
+      name,
+      getTypes,
+      getAbilities,
+      height,
+      weight,
+      species: species.name,
+      imgUrl: data.sprites.other["official-artwork"]["front_default"],
+    };
+  }, []);
 
   const prevClickHandler = () => {
-    setIsNew(true);
-    pokemonCtx.setUrl(pokemonCtx.name.previous);
+    setStatus("GET_NEW_NAMES");
+    setUrl(names.previous);
   };
 
   const nextClickHandler = () => {
-    setIsNew(true);
-    pokemonCtx.setUrl(pokemonCtx.name.next);
+    setStatus("GET_NEW_NAMES");
+    setUrl(names.next);
   };
 
-  const handleLoading = (boolean) => {
-    setIsLoading(boolean);
-  };
+  useEffect(() => {
+    const getPokemons = async (url) => {
+      try {
+        fetchJSONData(url)
+          .then((data) => setNames(data))
+          .then(() => {
+            setStatus("GET_NEW_POKEMONS_INFO");
+          });
+      } catch (err) {
+        setStatus("ERROR");
+        console.log(err.message);
+      }
+    };
 
-  const handleIsNew = (boolean) => {
-    setIsNew(boolean);
-  };
+    const fetchPokemonsInfo = async () => {
+      try {
+        setStatus("LOADING");
+        const pokemonsInfo = await Promise.all(
+          names.results.map(async (data) => {
+            const pokemonData = await getPokemonData(data.url);
+            // console.log("pokemonData", pokemonData);
+            return {
+              id: pokemonData.id,
+              name: pokemonData.name,
+              types: pokemonData.getTypes,
+              imgUrl: pokemonData.imgUrl,
+              abilities: pokemonData.getAbilities,
+              height: pokemonData.height,
+              weight: pokemonData.weight,
+              species: pokemonData.species,
+            };
+          })
+        );
 
-  const handleGetData = (boolean) => {
-    setGetNewData(boolean);
-  };
+        setPokemonsData(pokemonsInfo);
+        setStatus("COMPLETE");
+
+        console.log("pokemonsData", pokemonsInfo);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    if (status === "NEW") {
+      getPokemons(url);
+    }
+    if (status === "GET_NEW_POKEMONS_INFO") fetchPokemonsInfo();
+  }, [fetchJSONData, getPokemonData, names.results, status, url]);
 
   return (
     <div className={classes.main}>
       <Button className={classes["button-left"]} onClick={prevClickHandler}>
-        {pokemonCtx.name.previous && (
+        {names.previous && (
           <i
             className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
           ></i>
         )}
       </Button>
 
-      <Pokedex
-        handleLoading={handleLoading}
-        handleIsNew={handleIsNew}
-        handleGetData={handleGetData}
-        isNew={isNew}
-        isLoading={isLoading}
-        getNewData={getNewData}
-      />
+      <Pokedex pokemonsData={pokemonsData} />
 
       <Button className={classes["button-right"]} onClick={nextClickHandler}>
-        {pokemonCtx.name.next && (
+        {names.next && (
           <i
             className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
           ></i>
