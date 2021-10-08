@@ -1,14 +1,22 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import PokemonCard from "./PokemonCard";
 import PokemonContext from "../store/pokemon-context";
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
+  const [isNew, setIsNew] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const pokemonCtx = useContext(PokemonContext);
 
   const pokemonDatas = props.data.map((data, i) => (
-    <PokemonCard key={i} name={data.name} imgUrl={data.imgUrl} id={data.id} />
+    <PokemonCard
+      key={i}
+      name={data.name}
+      imgUrl={data.imgUrl}
+      isLoading={isLoading}
+      id={data.id}
+    />
   ));
 
   const fetchJSONData = useCallback(async (url) => {
