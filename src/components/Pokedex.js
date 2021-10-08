@@ -3,14 +3,8 @@ import PokemonCard from "./PokemonCard";
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
-  const pokemonDatas = props.pokemonsData.map((data, i) => (
-    <PokemonCard
-      key={i}
-      name={data.name}
-      imgUrl={data.imgUrl}
-      isLoading={props.isLoading}
-      id={data.id}
-    />
+  const pokemonDatas = props.names.map((data, i) => (
+    <PokemonCard key={i} url={data.url} />
   ));
 
   return (

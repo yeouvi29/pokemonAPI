@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState, useCallback } from "react";
 
 import ImageContainer from "../UI/ImageContainer";
 import NameContainer from "../UI/NameContainer";
@@ -8,17 +8,68 @@ import PokemonImage from "./PokemonImage";
 import classes from "./PokemonCard.module.css";
 
 const PokemonCard = (props) => {
+  const [pokemonsData, setPokemonsData] = useState([]);
+
+  const getPokemonData = useCallback(async (url) => {
+    console.log("getPokemons");
+    const res = await fetch(url);
+    const data = await res.json();
+    const { name } = data;
+    // const { id, name, height, weight, types, species, abilities } = data;
+    // console.log("data", data);
+    // const getTypes = await types.map((data) => data.type.name);
+    // const getAbilities = await abilities.map((data) => data.ability.name);
+    // console.log("id", id, name, getTypes);
+    return {
+      // id,
+      name: name[0].toUpperCase() + name.slice(1),
+      // getTypes,
+      // getAbilities,
+      // height,
+      // weight,
+      // species: species.name,
+      imgUrl: data.sprites.other["official-artwork"]["front_default"],
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchPokemonsInfo = async () => {
+      // console.log("getpokemon data start");
+      try {
+        getPokemonData(props.url)
+          .then((data) => {
+            return { name: data.name, imgUrl: data.imgUrl };
+          })
+          .then((data) => setPokemonsData(data));
+        // console.log("pokemonData", pokemonData);
+        // return {
+        // id: pokemonData.id,
+        // name: pokemonData.name,
+        // types: pokemonData.getTypes,
+        // imgUrl: pokemonData.imgUrl,
+        // abilities: pokemonData.getAbilities,
+        // height: pokemonData.height,
+        // weight: pokemonData.weight,
+        // species: pokemonData.species,
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+
+    fetchPokemonsInfo();
+  }, [getPokemonData, props.url]);
+
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>
-        {props.isLoading === "LOADING" ? (
+        {/* {props.isLoading === "LOADING" ? (
           <i className={`fas fa-spinner ${classes.spinner}`}></i>
-        ) : (
-          <PokemonImage imgUrl={props.imgUrl} name={props.name} />
-        )}
+        ) : ( */}
+        <PokemonImage imgUrl={pokemonsData.imgUrl} name={pokemonsData.name} />
+        {/* )} */}
       </ImageContainer>
-      <NameContainer id={props.id}>
-        <PokemonName name={props.name} />
+      <NameContainer>
+        <PokemonName name={pokemonsData.name} />
       </NameContainer>
     </div>
   );
