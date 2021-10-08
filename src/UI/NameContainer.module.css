@@ -2,8 +2,9 @@
   width: 70%;
   min-width: 200px;
   position: relative;
-  align-self: flex-start;
-  margin-left: 40px;
+  /* align-self: flex-start; */
+  /* margin-left: 40px; */
+  margin-left: -10%;
 }
 
 .name {
