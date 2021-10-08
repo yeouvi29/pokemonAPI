@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useCallback } from "react";
+import { memo, useEffect, useState, useCallback, Fragment } from "react";
 
 import ImageContainer from "../UI/ImageContainer";
 import NameContainer from "../UI/NameContainer";
@@ -6,9 +6,17 @@ import PokemonName from "./PokemonName";
 import PokemonImage from "./PokemonImage";
 
 import classes from "./PokemonCard.module.css";
+import PokemonInfo from "./PokemonInfo";
 
 const PokemonCard = (props) => {
   const [pokemonData, setPokemonData] = useState([]);
+  const [showPokemonInfo, setShowPokemonInfo] = useState(false);
+  const showPokemonInfoHandler = () => {
+    setShowPokemonInfo(true);
+  };
+  const hidePokemonInfoHandler = () => {
+    setShowPokemonInfo(false);
+  };
 
   // const getPokemonData = useCallback(async (url) => {
   //   console.log("getPokemons");
@@ -33,17 +41,33 @@ const PokemonCard = (props) => {
   // }, []);
 
   useEffect(() => {
-    const fetchPokemonsInfo = async () => {
+    const fetchPokemonInfo = async () => {
       // console.log("getpokemon data start");
       try {
         fetch(props.url)
           .then((res) => res.json())
-          .then((data) => ({
-            name: data.name[0].toUpperCase() + data.name.slice(1),
-            imgUrl: data.sprites.other["official-artwork"]["front_default"],
-          }))
           .then((data) => {
-            return { name: data.name, imgUrl: data.imgUrl };
+            const abilities = data.abilities.map((data) => data.ability.name);
+            return {
+              name: data.name[0].toUpperCase() + data.name.slice(1),
+              imgUrl: data.sprites.other["official-artwork"]["front_default"],
+              id: data.id,
+              abilities,
+              height: data.height,
+              weight: data.weight,
+              species: data.species.name,
+            };
+          })
+          .then((data) => {
+            return {
+              name: data.name,
+              imgUrl: data.imgUrl,
+              id: data.id,
+              abilities: data.abilities,
+              height: data.height,
+              weight: data.weight,
+              species: data.species,
+            };
           })
           .then((data) => setPokemonData(data));
         // console.log("pokemonData", pokemonData);
@@ -61,18 +85,30 @@ const PokemonCard = (props) => {
       }
     };
 
-    fetchPokemonsInfo();
+    fetchPokemonInfo();
   }, [props.url]);
 
   return (
-    <div className={classes["card--container"]}>
-      <ImageContainer>
-        <PokemonImage imgUrl={pokemonData.imgUrl} name={pokemonData.name} />
-      </ImageContainer>
-      <NameContainer>
-        <PokemonName name={pokemonData.name} />
-      </NameContainer>
-    </div>
+    <Fragment>
+      {showPokemonInfo && (
+        <PokemonInfo
+          onClose={hidePokemonInfoHandler}
+          pokemonData={pokemonData}
+          showPokemonInfo={showPokemonInfo}
+        />
+      )}
+      <div
+        className={classes["card--container"]}
+        onClick={showPokemonInfoHandler}
+      >
+        <ImageContainer>
+          <PokemonImage imgUrl={pokemonData.imgUrl} name={pokemonData.name} />
+        </ImageContainer>
+        <NameContainer>
+          <PokemonName name={pokemonData.name} />
+        </NameContainer>
+      </div>
+    </Fragment>
   );
 };
 
