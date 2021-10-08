@@ -5,36 +5,33 @@ import Pokedex from "./Pokedex";
 import classes from "./Main.module.css";
 
 const Main = () => {
-  const [names, setNames] = useState({
+  const [pageData, setPageData] = useState({
     isFetching: true,
-    url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
+    currentUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
     next: "",
     prev: "",
-    results: [],
+    pokedexData: [],
   });
 
-  console.log("main is rendering", names);
+  console.log("main is rendering", pageData);
 
   const prevClickHandler = () => {
-    console.log("prev clicked");
-    setNames((prevState) => ({
+    setPageData((prevState) => ({
       isFetching: true,
-      url: prevState.prev,
+      currentUurl: prevState.prev,
       next: "",
       prev: "",
-      results: [],
+      pokedexData: [],
     }));
   };
 
   const nextClickHandler = () => {
-    console.log("next clicked");
-
-    setNames((prevState) => ({
+    setPageData((prevState) => ({
       isFetching: true,
-      url: prevState.next,
+      currentUrl: prevState.next,
       next: "",
       prev: "",
-      results: [],
+      pokedexData: [],
     }));
   };
 
@@ -45,28 +42,28 @@ const Main = () => {
         fetch(url)
           .then((res) => res.json())
           .then((data) => {
-            setNames({
+            setPageData({
               isFetching: false,
-              url: "",
+              currentUrl: "",
               next: data.next,
               prev: data.previous,
-              results: data.results,
+              pokedexData: data.results,
             });
           });
       } catch (err) {
-        setNames((prevState) => ({
+        setPageData((prevState) => ({
           isFetching: false,
-          url: "",
+          currentUrl: "",
           next: prevState.next,
           prev: prevState.prev,
-          results: prevState.results,
+          pokedexData: prevState.pokedexData,
         }));
         console.log(err.message);
       }
     };
 
-    if (names.isFetching) getPokemons(names.url);
-  }, [names.isFetching, names.url]);
+    if (pageData.isFetching) getPokemons(pageData.currentUrl);
+  }, [pageData.isFetching, pageData.currentUrl]);
 
   return (
     <div className={classes.main}>
@@ -75,21 +72,21 @@ const Main = () => {
         name="prev"
         onClick={prevClickHandler}
       >
-        {names.prev && (
+        {pageData.prev && (
           <i
             className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
           ></i>
         )}
       </Button>
 
-      <Pokedex names={names.results} />
+      <Pokedex pokedexData={pageData.pokedexData} />
 
       <Button
         className={classes["button-right"]}
         name="next"
         onClick={nextClickHandler}
       >
-        {names.next && (
+        {pageData.next && (
           <i
             className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
           ></i>

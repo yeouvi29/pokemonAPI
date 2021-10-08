@@ -3,7 +3,7 @@ import PokemonCard from "./PokemonCard";
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
-  const pokemonDatas = props.names.map((data, i) => (
+  const pokemonDatas = props.pokedexData.map((data, i) => (
     <PokemonCard key={i} url={data.url} />
   ));
 
