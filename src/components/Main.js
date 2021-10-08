@@ -1,13 +1,14 @@
 import { memo, useState, useEffect, useCallback } from "react";
 
 import Button from "../UI/Button";
-import Pokedex from "../components/Pokedex";
-import PokemonContext from "../store/pokemon-context";
+import Pokedex from "./Pokedex";
 import classes from "./Main.module.css";
 
 const Main = () => {
-  const [status, setStatus] = useState("NEW");
-  const [url, setUrl] = useState("");
+  const [status, setStatus] = useState("GET_NEW_NAMES");
+  const [url, setUrl] = useState(
+    "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
+  );
   const [names, setNames] = useState({
     count: 0,
     next: "",
@@ -94,7 +95,7 @@ const Main = () => {
         console.log(err.message);
       }
     };
-    if (status === "NEW") {
+    if (status === "GET_NEW_NAMES") {
       getPokemons(url);
     }
     if (status === "GET_NEW_POKEMONS_INFO") fetchPokemonsInfo();
