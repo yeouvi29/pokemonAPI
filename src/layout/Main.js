@@ -1,4 +1,4 @@
-import { useContext, memo } from "react";
+import { useContext, memo, useState } from "react";
 
 import Button from "../UI/Button";
 import Pokedex from "../components/Pokedex";
@@ -6,16 +6,31 @@ import PokemonContext from "../store/pokemon-context";
 import classes from "./Main.module.css";
 
 const Main = () => {
+  const [isNew, setIsNew] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [getNewData, setGetNewData] = useState(false);
   const pokemonCtx = useContext(PokemonContext);
 
   const prevClickHandler = () => {
-    pokemonCtx.handleClick();
+    setIsNew(true);
     pokemonCtx.setUrl(pokemonCtx.name.previous);
   };
 
   const nextClickHandler = () => {
-    pokemonCtx.handleClick();
+    setIsNew(true);
     pokemonCtx.setUrl(pokemonCtx.name.next);
+  };
+
+  const handleLoading = (boolean) => {
+    setIsLoading(boolean);
+  };
+
+  const handleIsNew = (boolean) => {
+    setIsNew(boolean);
+  };
+
+  const handleGetData = (boolean) => {
+    setGetNewData(boolean);
   };
 
   return (
@@ -28,7 +43,14 @@ const Main = () => {
         )}
       </Button>
 
-      <Pokedex data={pokemonCtx.pokemonData} />
+      <Pokedex
+        handleLoading={handleLoading}
+        handleIsNew={handleIsNew}
+        handleGetData={handleGetData}
+        isNew={isNew}
+        isLoading={isLoading}
+        getNewData={getNewData}
+      />
 
       <Button className={classes["button-right"]} onClick={nextClickHandler}>
         {pokemonCtx.name.next && (

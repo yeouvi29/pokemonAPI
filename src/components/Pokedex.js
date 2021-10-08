@@ -5,16 +5,19 @@ import PokemonContext from "../store/pokemon-context";
 import classes from "./Pokedex.module.css";
 
 const Pokedex = (props) => {
-  const [isNew, setIsNew] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [names, setNames] = useState({});
+  pokemonData: [],
+  // const [isNew, setIsNew] = useState(true);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [getNewData, setGetNewData] = useState(false);
   const pokemonCtx = useContext(PokemonContext);
 
-  const pokemonDatas = props.data.map((data, i) => (
+  const pokemonDatas = pokemonCtx.pokemonData.map((data, i) => (
     <PokemonCard
       key={i}
       name={data.name}
       imgUrl={data.imgUrl}
-      isLoading={isLoading}
+      // isLoading={props.isLoading}
       id={data.id}
     />
   ));
@@ -47,16 +50,18 @@ const Pokedex = (props) => {
 
   useEffect(() => {
     const getPokemons = async (url) => {
-      if (!pokemonCtx.loading) pokemonCtx.handleStatus("start");
+      props.handleLoading(true);
+
       try {
-        const data = await fetchJSONData(url);
-
-        // console.log("name", data);
-        pokemonCtx.addPokemons(data);
-
-        if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
+        fetchJSONData(url)
+          .then((data) => pokemonCtx.addPokemons(data))
+          .then(() => {
+            props.handleLoading(false);
+            props.handleIsNew(false);
+            props.handleGetData(true);
+          });
       } catch (err) {
-        pokemonCtx.handleStatus("error", err.message);
+        props.handleLoading(false);
       }
     };
 
@@ -79,18 +84,20 @@ const Pokedex = (props) => {
             };
           })
         );
-        console.log("pokemonsInfo", pokemonsInfo);
+
         pokemonCtx.addInfos(pokemonsInfo);
-        if (pokemonCtx.loading) pokemonCtx.handleStatus("success");
+        props.handleGetData(false);
+
+        console.log("pokemonsInfo", pokemonsInfo);
       } catch (err) {
-        pokemonCtx.handleStatus("error", err.message);
+        console.log(err.message);
       }
     };
-    if (pokemonCtx.isNew) {
+    if (props.isNew) {
       getPokemons(pokemonCtx.url);
     }
-    if (pokemonCtx.getInfos && !pokemonCtx.loading) fetchPokemonsInfo();
-  }, [fetchJSONData, pokemonCtx, getPokemonData]);
+    if (props.getNewData) fetchPokemonsInfo();
+  }, [fetchJSONData, pokemonCtx, getPokemonData, props]);
 
   return (
     <div className={classes["cards--container"]}>
