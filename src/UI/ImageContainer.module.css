@@ -3,14 +3,17 @@
   width: 80%;
   border-radius: 50px;
   padding: 5px;
-  position: relative;
-  margin-left: 5px;
-  display: flex;
-  justify-content: center;
+  /* position: absolute;
+  bottom: 0; */
+
+  /* margin-left: 10%; */
+  display: grid;
+  justify-items: center;
   align-items: center;
   z-index: 2;
   box-sizing: border-box;
   overflow: hidden;
+  transition: all .1s ease-in;
 }
 
 @media (min-width: 600px) {

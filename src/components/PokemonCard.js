@@ -8,7 +8,7 @@ import PokemonImage from "./PokemonImage";
 import classes from "./PokemonCard.module.css";
 
 const PokemonCard = (props) => {
-  const [pokemonsData, setPokemonsData] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
 
   // const getPokemonData = useCallback(async (url) => {
   //   console.log("getPokemons");
@@ -45,7 +45,7 @@ const PokemonCard = (props) => {
           .then((data) => {
             return { name: data.name, imgUrl: data.imgUrl };
           })
-          .then((data) => setPokemonsData(data));
+          .then((data) => setPokemonData(data));
         // console.log("pokemonData", pokemonData);
         // return {
         // id: pokemonData.id,
@@ -67,10 +67,10 @@ const PokemonCard = (props) => {
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>
-        <PokemonImage imgUrl={pokemonsData.imgUrl} name={pokemonsData.name} />
+        <PokemonImage imgUrl={pokemonData.imgUrl} name={pokemonData.name} />
       </ImageContainer>
       <NameContainer>
-        <PokemonName name={pokemonsData.name} />
+        <PokemonName name={pokemonData.name} />
       </NameContainer>
     </div>
   );
