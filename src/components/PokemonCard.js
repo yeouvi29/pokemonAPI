@@ -10,33 +10,38 @@ import classes from "./PokemonCard.module.css";
 const PokemonCard = (props) => {
   const [pokemonsData, setPokemonsData] = useState([]);
 
-  const getPokemonData = useCallback(async (url) => {
-    console.log("getPokemons");
-    const res = await fetch(url);
-    const data = await res.json();
-    const { name } = data;
-    // const { id, name, height, weight, types, species, abilities } = data;
-    // console.log("data", data);
-    // const getTypes = await types.map((data) => data.type.name);
-    // const getAbilities = await abilities.map((data) => data.ability.name);
-    // console.log("id", id, name, getTypes);
-    return {
-      // id,
-      name: name[0].toUpperCase() + name.slice(1),
-      // getTypes,
-      // getAbilities,
-      // height,
-      // weight,
-      // species: species.name,
-      imgUrl: data.sprites.other["official-artwork"]["front_default"],
-    };
-  }, []);
+  // const getPokemonData = useCallback(async (url) => {
+  //   console.log("getPokemons");
+  //   const res = await fetch(url);
+  //   const data = await res.json();
+  //   const { name } = data;
+  //   // const { id, name, height, weight, types, species, abilities } = data;
+  //   // console.log("data", data);
+  //   // const getTypes = await types.map((data) => data.type.name);
+  //   // const getAbilities = await abilities.map((data) => data.ability.name);
+  //   // console.log("id", id, name, getTypes);
+  //   return {
+  //     // id,
+  //     name: name[0].toUpperCase() + name.slice(1),
+  //     // getTypes,
+  //     // getAbilities,
+  //     // height,
+  //     // weight,
+  //     // species: species.name,
+  //     imgUrl: data.sprites.other["official-artwork"]["front_default"],
+  //   };
+  // }, []);
 
   useEffect(() => {
     const fetchPokemonsInfo = async () => {
       // console.log("getpokemon data start");
       try {
-        getPokemonData(props.url)
+        fetch(props.url)
+          .then((res) => res.json())
+          .then((data) => ({
+            name: data.name[0].toUpperCase() + data.name.slice(1),
+            imgUrl: data.sprites.other["official-artwork"]["front_default"],
+          }))
           .then((data) => {
             return { name: data.name, imgUrl: data.imgUrl };
           })
@@ -57,16 +62,12 @@ const PokemonCard = (props) => {
     };
 
     fetchPokemonsInfo();
-  }, [getPokemonData, props.url]);
+  }, [props.url]);
 
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>
-        {/* {props.isLoading === "LOADING" ? (
-          <i className={`fas fa-spinner ${classes.spinner}`}></i>
-        ) : ( */}
         <PokemonImage imgUrl={pokemonsData.imgUrl} name={pokemonsData.name} />
-        {/* )} */}
       </ImageContainer>
       <NameContainer>
         <PokemonName name={pokemonsData.name} />

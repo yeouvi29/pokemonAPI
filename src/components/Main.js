@@ -1,29 +1,42 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import Button from "../UI/Button";
 import Pokedex from "./Pokedex";
 import classes from "./Main.module.css";
 
 const Main = () => {
-  const [isFetching, setIsFetching] = useState(true);
-  const [url, setUrl] = useState(
-    "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
-  );
-  const [names, setNames] = useState({ next: "", prev: "", results: [] });
+  const [names, setNames] = useState({
+    isFetching: true,
+    url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
+    next: "",
+    prev: "",
+    results: [],
+  });
 
-  console.log("main is rendering");
+  console.log("main is rendering", names);
 
-  const prevClickHandler = useCallback(() => {
+  const prevClickHandler = () => {
     console.log("prev clicked");
-    setIsFetching(true);
-    setUrl(names.prev);
-  }, [names.prev]);
+    setNames((prevState) => ({
+      isFetching: true,
+      url: prevState.prev,
+      next: "",
+      prev: "",
+      results: [],
+    }));
+  };
 
-  const nextClickHandler = useCallback(() => {
+  const nextClickHandler = () => {
     console.log("next clicked");
-    setIsFetching(true);
-    setUrl(names.next);
-  }, [names.next]);
+
+    setNames((prevState) => ({
+      isFetching: true,
+      url: prevState.next,
+      next: "",
+      prev: "",
+      results: [],
+    }));
+  };
 
   useEffect(() => {
     const getPokemons = async (url) => {
@@ -33,21 +46,27 @@ const Main = () => {
           .then((res) => res.json())
           .then((data) => {
             setNames({
+              isFetching: false,
+              url: "",
               next: data.next,
-              prev: data.prev,
+              prev: data.previous,
               results: data.results,
             });
-
-            setIsFetching(false);
           });
       } catch (err) {
-        setIsFetching(false);
+        setNames((prevState) => ({
+          isFetching: false,
+          url: "",
+          next: prevState.next,
+          prev: prevState.prev,
+          results: prevState.results,
+        }));
         console.log(err.message);
       }
     };
 
-    if (isFetching) getPokemons(url);
-  }, [isFetching, url]);
+    if (names.isFetching) getPokemons(names.url);
+  }, [names.isFetching, names.url]);
 
   return (
     <div className={classes.main}>
