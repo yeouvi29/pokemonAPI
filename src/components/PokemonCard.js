@@ -25,12 +25,14 @@ const PokemonCard = (props) => {
         fetch(props.url)
           .then((res) => res.json())
           .then((data) => {
-            const abilities = data.abilities.map((data) => data.ability.name);
+            const types = data.types.map((data) =>
+              data.type.name.toLowerCase()
+            );
             return {
               name: data.name[0].toUpperCase() + data.name.slice(1),
               imgUrl: data.sprites.other["official-artwork"]["front_default"],
               id: data.id,
-              abilities,
+              types,
               height: data.height,
               weight: data.weight,
               species: data.species.name,
@@ -41,7 +43,7 @@ const PokemonCard = (props) => {
               name: data.name,
               imgUrl: data.imgUrl,
               id: data.id,
-              abilities: data.abilities,
+              types: data.types,
               height: data.height,
               weight: data.weight,
               species: data.species,
