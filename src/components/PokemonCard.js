@@ -11,8 +11,8 @@ const PokemonCard = (props) => {
   return (
     <div className={classes["card--container"]}>
       <ImageContainer>
-        {props.isLoading ? (
-          <i class="fas fa-spinner"></i>
+        {props.isLoading === "LOADING" ? (
+          <i className={`fas fa-spinner ${classes.spinner}`}></i>
         ) : (
           <PokemonImage imgUrl={props.imgUrl} name={props.name} />
         )}

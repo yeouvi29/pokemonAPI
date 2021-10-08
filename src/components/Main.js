@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import Button from "../UI/Button";
 import Pokedex from "./Pokedex";
@@ -9,21 +9,22 @@ const Main = () => {
   const [url, setUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
   );
-  const [names, setNames] = useState({
-    count: 0,
-    next: "",
-    previous: "",
-    results: [],
-  });
+  const [prev, setPrev] = useState("");
+  const [next, setNext] = useState("");
+  const [names, setNames] = useState([]);
   const [pokemonsData, setPokemonsData] = useState([]);
 
+  console.log("main is rendering");
+
   const fetchJSONData = useCallback(async (url) => {
+    console.log("fetching Data");
     const res = await fetch(url);
     const data = await res.json();
     return data;
   }, []);
 
   const getPokemonData = useCallback(async (url) => {
+    console.log("getPokemons");
     const res = await fetch(url);
     const data = await res.json();
     const { id, name, height, weight, types, species, abilities } = data;
@@ -43,21 +44,28 @@ const Main = () => {
     };
   }, []);
 
-  const prevClickHandler = () => {
+  const prevClickHandler = useCallback(() => {
+    console.log("prev clicked");
     setStatus("GET_NEW_NAMES");
-    setUrl(names.previous);
-  };
+    setUrl(prev);
+  }, [prev]);
 
-  const nextClickHandler = () => {
+  const nextClickHandler = useCallback(() => {
+    console.log("next clicked");
     setStatus("GET_NEW_NAMES");
-    setUrl(names.next);
-  };
+    setUrl(next);
+  }, [next]);
 
   useEffect(() => {
     const getPokemons = async (url) => {
+      console.log("getName start");
       try {
         fetchJSONData(url)
-          .then((data) => setNames(data))
+          .then((data) => {
+            setNames(data.results);
+            setPrev(data.previous);
+            setNext(data.next);
+          })
           .then(() => {
             setStatus("GET_NEW_POKEMONS_INFO");
           });
@@ -68,10 +76,12 @@ const Main = () => {
     };
 
     const fetchPokemonsInfo = async () => {
+      // console.log("getpokemon data start");
       try {
         setStatus("LOADING");
+        setPokemonsData([]);
         const pokemonsInfo = await Promise.all(
-          names.results.map(async (data) => {
+          names.map(async (data) => {
             const pokemonData = await getPokemonData(data.url);
             // console.log("pokemonData", pokemonData);
             return {
@@ -90,8 +100,9 @@ const Main = () => {
         setPokemonsData(pokemonsInfo);
         setStatus("COMPLETE");
 
-        console.log("pokemonsData", pokemonsInfo);
+        // console.log("pokemonsData", pokemonsInfo);
       } catch (err) {
+        setStatus("ERROR");
         console.log(err.message);
       }
     };
@@ -99,29 +110,27 @@ const Main = () => {
       getPokemons(url);
     }
     if (status === "GET_NEW_POKEMONS_INFO") fetchPokemonsInfo();
-  }, [fetchJSONData, getPokemonData, names.results, status, url]);
+  }, [fetchJSONData, getPokemonData, names, status, url]);
 
   return (
     <div className={classes.main}>
       <Button className={classes["button-left"]} onClick={prevClickHandler}>
-        {names.previous && (
-          <i
-            className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
-          ></i>
-        )}
+        {/* {prev && ( */}
+        <i className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}></i>
+        {/* )} */}
       </Button>
 
-      <Pokedex pokemonsData={pokemonsData} />
+      <Pokedex pokemonsData={pokemonsData} isLoading={status} />
 
       <Button className={classes["button-right"]} onClick={nextClickHandler}>
-        {names.next && (
-          <i
-            className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
-          ></i>
-        )}
+        {/* {next && ( */}
+        <i
+          className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
+        ></i>
+        {/* )} */}
       </Button>
     </div>
   );
 };
 
-export default memo(Main);
+export default Main;

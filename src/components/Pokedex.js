@@ -8,7 +8,7 @@ const Pokedex = (props) => {
       key={i}
       name={data.name}
       imgUrl={data.imgUrl}
-      // isLoading={props.isLoading}
+      isLoading={props.isLoading}
       id={data.id}
     />
   ));
