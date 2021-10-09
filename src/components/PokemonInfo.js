@@ -50,7 +50,7 @@ const PokemonInfo = (props) => {
     <Modal show={props.showPokemonInfo} onClose={props.onClose}>
       <div className={classes["info--container"]}>
         <div className={classes["image--container"]}>
-          {props.imgUrl ? (
+          {imgUrl ? (
             <img className={classes.image} src={imgUrl} alt={name} />
           ) : (
             <i className={`fas fa-question ${classes.question}`}></i>
