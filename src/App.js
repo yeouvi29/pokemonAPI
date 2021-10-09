@@ -5,7 +5,6 @@ import Main from "./components/Main";
 import classes from "./App.module.css";
 
 function App() {
-  console.log("app is rendering");
   return (
     <div className={classes.app}>
       <Header />
