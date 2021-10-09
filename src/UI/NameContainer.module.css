@@ -9,8 +9,9 @@
 
 .name {
   height: 45px;
-  background-color: yellow;
+  background-color: #EEEEEE;
   clip-path: polygon(0% 0%, 90% 0%, 100% 100%, 10% 100%);
+  font-family: 'Roboto', sans-serif;
   margin-top: -10px;
   margin-left: 10px;
   z-index: 1;

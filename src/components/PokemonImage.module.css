@@ -5,9 +5,21 @@
   bottom: 0;
   right: 0;
   width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: all .2s ease-in;
 }
 
 .question {
-  align-self: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 5rem;
+  transition: all .2s ease-in;
 }

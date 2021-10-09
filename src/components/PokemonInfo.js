@@ -65,8 +65,8 @@ const PokemonInfo = (props) => {
             <li>Name: {name}</li>
             <li>ID: {id}</li>
             <li>Types: {typeIcons}</li>
-            <li>Height: {height}"</li>
-            <li>Weight: {weight}lbs</li>
+            <li>Height: {height / 10}m</li>
+            <li>Weight: {weight / 10}kg</li>
           </ul>
         </div>
       </div>

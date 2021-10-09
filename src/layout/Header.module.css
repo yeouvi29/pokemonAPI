@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  height: 100px;
+  height: 70px;
   display: flex;
   top: 0;
   flex-direction: row;
@@ -12,20 +12,28 @@
   z-index: 10;
 }
 
-.logo--container {
+.logo--container,
+.logo--container:visited {
   height: 80%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.logo--container:hover,
+.logo--container:active {
+  color: darkgrey;
 }
 
 .logo {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .pikachu {
-  height: 80%;
+  height: 60%;
 }
 
 nav>ul {
@@ -34,4 +42,18 @@ nav>ul {
 
 nav ul li {
   font-size: 2rem;
+}
+
+@media (min-width: 600px) {
+  .header {
+    height: 100px;
+  }
+
+  .logo {
+    font-size: 3rem;
+  }
+
+  .pikachu {
+    height: 70%;
+  }
 }

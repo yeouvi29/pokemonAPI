@@ -18,7 +18,7 @@ const Main = () => {
   const prevClickHandler = () => {
     setPageData((prevState) => ({
       isFetching: true,
-      currentUurl: prevState.prev,
+      currentUrl: prevState.prev,
       next: "",
       prev: "",
       pokedexData: [],
@@ -34,7 +34,7 @@ const Main = () => {
       pokedexData: [],
     }));
   };
-
+  console.log(pageData);
   useEffect(() => {
     const getPokemons = async (url) => {
       console.log("getName start");

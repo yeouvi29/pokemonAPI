@@ -5,10 +5,11 @@ import classes from "./Header.module.css";
 const Header = () => {
   return (
     <div className={classes.header}>
-      <div className={classes["logo--container"]}>
+      <a className={classes["logo--container"]} href="/">
         <h1 className={classes.logo}>Pokémon</h1>
         <img className={classes.pikachu} src={pikachu} alt="pikachu" />
-      </div>
+      </a>
+
       <nav>
         <ul>{/* <li>Menu</li> */}</ul>
       </nav>
