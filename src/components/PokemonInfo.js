@@ -1,4 +1,3 @@
-import randomColor from "randomcolor";
 import Modal from "../UI/Modal";
 import bug from "./../assets/Pokemon_Type_Icon_Bug.png";
 import dark from "./../assets/Pokemon_Type_Icon_Dark.png";
@@ -42,31 +41,43 @@ const iconTypes = {
 };
 
 const PokemonInfo = (props) => {
-  const { name, id, types, height, weight, imgUrl } = props.pokemonData;
-
-  const color = randomColor();
-
+  const { name, abilities, types, height, weight, imgUrl } = props.pokemonData;
   const typeIcons = types.map((type) => {
-    console.log(type);
     return <img className={classes.icon} src={iconTypes[type]} alt={type} />;
   });
+
   return (
     <Modal show={props.showPokemonInfo} onClose={props.onClose}>
       <div className={classes["info--container"]}>
         <div className={classes["image--container"]}>
           <img className={classes.image} src={imgUrl} alt={name} />
         </div>
-        <div
-          className={classes["text--container"]}
-          style={{ border: `5px solid ${color}` }}
-        >
+        <div className={classes["text--container"]}>
           <ul className={classes["info--list"]}>
-            <li></li>
-            <li>Name: {name}</li>
-            <li>ID: {id}</li>
-            <li>Types: {typeIcons}</li>
-            <li>Height: {height / 10}m</li>
-            <li>Weight: {weight / 10}kg</li>
+            <li>
+              <span>Name</span>
+              <span> {name}</span>
+            </li>
+            <li className={classes.types}>
+              <span>Types</span>
+              <span>{typeIcons}</span>
+            </li>
+            <li>
+              <span>Abilities</span>
+              <span
+                style={{ fontSize: abilities.length > 15 ? ".8rem" : "1.2rem" }}
+              >
+                {abilities}
+              </span>
+            </li>
+            <li>
+              <span>Height</span>
+              <span>{height / 10}m</span>
+            </li>
+            <li>
+              <span>Weight</span>
+              <span>{weight / 10}kg</span>
+            </li>
           </ul>
         </div>
       </div>

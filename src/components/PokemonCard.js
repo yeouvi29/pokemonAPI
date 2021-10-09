@@ -28,14 +28,14 @@ const PokemonCard = (props) => {
             const types = data.types.map((data) =>
               data.type.name.toLowerCase()
             );
+            let abilities = data.abilities.map((data) => data.ability.name);
             setPokemonData({
               name: data.name[0].toUpperCase() + data.name.slice(1),
               imgUrl: data.sprites.other["official-artwork"]["front_default"],
-              id: data.id,
               types,
+              abilities: abilities.join(", "),
               height: data.height,
               weight: data.weight,
-              species: data.species.name,
             });
           });
       } catch (err) {

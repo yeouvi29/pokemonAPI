@@ -2,6 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 50% 50%;
+  box-sizing: border-box;
 }
 
 .image--contianer {
@@ -15,6 +16,8 @@
 
 .text--container {
   border-radius: 10px;
+  background-color: #3DB2FF;
+
 }
 
 .icon {
@@ -23,13 +26,44 @@
 }
 
 .info--list {
+  width: 100%;
+  height: 100%;
   color: #000;
   list-style: none;
   display: grid;
-  padding: 20px;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: repeat(3, 33.3333%);
+  justify-items: start;
+  align-items: center;
+  padding: 0 10px;
+  margin: 0;
 }
 
 .info--list li {
   line-height: 2rem;
-  font-size: 1.5rem;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  justify-content: space-around;
 }
+
+.info--list li>span {
+  display: block;
+  width: 100%;
+  height: 50%;
+}
+
+.info--list li>span:first-child {
+  color: #fff;
+}
+
+.info--list li>span:last-child {
+  font-size: 1.2rem;
+}
+
+/* .types span:first-child {
+  margin-bottom: 10px;
+} */
+
+/* .types span:last-child {
+  margin-top: 10px;
+} */
