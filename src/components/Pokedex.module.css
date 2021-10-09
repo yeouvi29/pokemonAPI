@@ -19,7 +19,7 @@
   grid-template-columns: repeat(1, minmax(200px, 1fr));
   grid-gap: 20px;
   box-sizing: border-box;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 @media (min-width: 650px) {

@@ -10,9 +10,10 @@
 
 .modal {
   position: absolute;
-  top: 20vh;
+  top: 3vh;
   transform: translateX(-50%);
   width: 80%;
+  height: 80vh;
   background-color: white;
   padding: 1rem;
   border-radius: 14px;
@@ -60,6 +61,7 @@
   .modal {
     position: fixed;
     top: 20vh;
+    height: auto;
     left: calc(50% - 20rem);
     width: 40rem;
     background-color: white;
