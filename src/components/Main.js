@@ -68,7 +68,7 @@ const Main = () => {
   return (
     <div className={classes.main}>
       <Button
-        className={classes["button-left"]}
+        className={`${classes["button-left"]} ${classes.buttons}`}
         name="prev"
         onClick={prevClickHandler}
       >
@@ -82,7 +82,7 @@ const Main = () => {
       <Pokedex pokedexData={pageData.pokedexData} />
 
       <Button
-        className={classes["button-right"]}
+        className={`${classes["button-right"]} ${classes.buttons}`}
         name="next"
         onClick={nextClickHandler}
       >

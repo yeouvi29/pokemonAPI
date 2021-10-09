@@ -14,6 +14,12 @@
   box-sizing: border-box;
 }
 
+.buttons {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, .8);
+}
+
 .button-left {
   left: 0;
   grid-area: btn-left;

@@ -17,6 +17,7 @@
   padding-left: 10px;
   padding-right: 10px;
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(1, minmax(200px, 1fr));
   grid-gap: 20px;
   box-sizing: border-box;

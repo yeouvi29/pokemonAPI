@@ -1,11 +1,8 @@
 .image--container {
-  height: 100%;
-  width: 90%;
+  padding-top: 100%;
+  width: 100%;
+  position: relative;
   border-radius: 50px;
-  padding: 5px;
-  display: grid;
-  justify-items: center;
-  align-items: center;
   z-index: 2;
   box-sizing: border-box;
   overflow: hidden;
