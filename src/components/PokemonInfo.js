@@ -54,7 +54,7 @@ const PokemonInfo = (props) => {
         </div>
         <div className={classes["text--container"]}>
           <ul className={classes["info--list"]}>
-            <li>
+            <li className={classes.name}>
               <span>Name</span>
               <span> {name}</span>
             </li>
@@ -62,19 +62,19 @@ const PokemonInfo = (props) => {
               <span>Types</span>
               <span>{typeIcons}</span>
             </li>
-            <li>
+            {/* <li>
               <span>Abilities</span>
               <span
                 style={{ fontSize: abilities.length > 15 ? ".8rem" : "1.2rem" }}
               >
                 {abilities}
               </span>
-            </li>
-            <li>
+            </li> */}
+            <li className={classes.height}>
               <span>Height</span>
               <span>{height / 10}m</span>
             </li>
-            <li>
+            <li className={classes.weight}>
               <span>Weight</span>
               <span>{weight / 10}kg</span>
             </li>
