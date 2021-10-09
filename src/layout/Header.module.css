@@ -5,7 +5,7 @@
   top: 0;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 0 20px;
   position: fixed;
   box-sizing: border-box;
   background-color: #000;
@@ -47,6 +47,7 @@ nav ul li {
 @media (min-width: 600px) {
   .header {
     height: 100px;
+    padding: 0 50px;
   }
 
   .logo {
