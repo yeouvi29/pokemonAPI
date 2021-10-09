@@ -5,6 +5,7 @@ import Pokedex from "./Pokedex";
 import classes from "./Main.module.css";
 
 const Main = () => {
+  // state that manages fetched page data from pokeapi
   const [pageData, setPageData] = useState({
     isFetching: true,
     currentUrl: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20",
@@ -13,8 +14,7 @@ const Main = () => {
     pokedexData: [],
   });
 
-  console.log("main is rendering", pageData);
-
+  // when "<" button is clicked, set the currentUrl to prev url that was stored in pageData.prev
   const prevClickHandler = () => {
     setPageData((prevState) => ({
       isFetching: true,
@@ -25,6 +25,7 @@ const Main = () => {
     }));
   };
 
+  // when ">" button is clicked, set the currentUrl to the url that was stored in pageData.next
   const nextClickHandler = () => {
     setPageData((prevState) => ({
       isFetching: true,
@@ -34,10 +35,10 @@ const Main = () => {
       pokedexData: [],
     }));
   };
-  console.log(pageData);
+
+  // when the state of pageData.isFetching or pageData.currentUrl is changed, fetching the new data with the url that is stored in pageData.currentUrl 
   useEffect(() => {
     const getPokemons = async (url) => {
-      console.log("getName start");
       try {
         fetch(url)
           .then((res) => res.json())

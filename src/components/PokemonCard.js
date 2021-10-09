@@ -4,21 +4,26 @@ import ImageContainer from "../UI/ImageContainer";
 import NameContainer from "../UI/NameContainer";
 import PokemonName from "./PokemonName";
 import PokemonImage from "./PokemonImage";
-
-import classes from "./PokemonCard.module.css";
 import PokemonInfo from "./PokemonInfo";
 
+import classes from "./PokemonCard.module.css";
+
 const PokemonCard = (props) => {
+  // state for storing the each pokemon's data that got from pokeapi
   const [pokemonData, setPokemonData] = useState([]);
+  // state for controlling visibility of modal
   const [showPokemonInfo, setShowPokemonInfo] = useState(false);
 
+  // handlers for chainging showPokemonInfo's state
   const showPokemonInfoHandler = () => {
     setShowPokemonInfo(true);
   };
+
   const hidePokemonInfoHandler = () => {
     setShowPokemonInfo(false);
   };
 
+  // when getting url from Pokedex component, fetching each Pokemon's data from pokeapi by the urls from Pokedex component
   useEffect(() => {
     const fetchPokemonInfo = async () => {
       try {
@@ -28,12 +33,11 @@ const PokemonCard = (props) => {
             const types = data.types.map((data) =>
               data.type.name.toLowerCase()
             );
-            let abilities = data.abilities.map((data) => data.ability.name);
+
             setPokemonData({
               name: data.name[0].toUpperCase() + data.name.slice(1),
               imgUrl: data.sprites.other["official-artwork"]["front_default"],
               types,
-              abilities: abilities.join(", "),
               height: data.height,
               weight: data.weight,
             });

@@ -150,12 +150,6 @@ li>span:last-child {
     width: 100%;
   }
 
-  /* .icon {
-    width: 30px;
-    margin-right: 10px;
-  } */
-
-
   .info--list li {
     font-size: 1rem;
   }
@@ -179,6 +173,11 @@ li>span:last-child {
 
   .info--list li {
     line-height: 2rem;
+  }
+
+  .icon {
+    width: 25px;
+    height: 25px;
   }
 
   li>span:last-child {

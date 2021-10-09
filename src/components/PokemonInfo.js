@@ -41,7 +41,9 @@ const iconTypes = {
 };
 
 const PokemonInfo = (props) => {
-  const { name, abilities, types, height, weight, imgUrl } = props.pokemonData;
+  // show pokemon's information when a modal is shown
+  const { name, types, height, weight, imgUrl } = props.pokemonData;
+
   const typeIcons = types.map((type) => {
     return <img className={classes.icon} src={iconTypes[type]} alt={type} />;
   });
@@ -66,14 +68,6 @@ const PokemonInfo = (props) => {
               <span>Types</span>
               <span>{typeIcons}</span>
             </li>
-            {/* <li>
-              <span>Abilities</span>
-              <span
-                style={{ fontSize: abilities.length > 15 ? ".8rem" : "1.2rem" }}
-              >
-                {abilities}
-              </span>
-            </li> */}
             <li className={classes.height}>
               <span>Height</span>
               <span>{height / 10}m</span>

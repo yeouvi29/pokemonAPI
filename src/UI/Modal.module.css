@@ -63,7 +63,6 @@
   .modal {
     height: 70vh;
   }
-
 }
 
 @media (min-width: 600px) {
@@ -71,12 +70,9 @@
     width: 35rem;
     height: auto;
   }
-
 }
 
 @media (min-width: 780px) {
-
-
   .modal {
     position: fixed;
     top: 20vh;

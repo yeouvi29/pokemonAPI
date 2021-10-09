@@ -9,10 +9,6 @@ const Header = () => {
         <h1 className={classes.logo}>Pokémon</h1>
         <img className={classes.pikachu} src={pikachu} alt="pikachu" />
       </a>
-
-      <nav>
-        <ul>{/* <li>Menu</li> */}</ul>
-      </nav>
     </div>
   );
 };
