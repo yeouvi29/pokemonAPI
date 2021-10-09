@@ -44,8 +44,10 @@ const PokemonInfo = (props) => {
   // show pokemon's information when a modal is shown
   const { name, types, height, weight, imgUrl } = props.pokemonData;
 
-  const typeIcons = types.map((type) => {
-    return <img className={classes.icon} src={iconTypes[type]} alt={type} />;
+  const typeIcons = types.map((type, i) => {
+    return (
+      <img key={i} className={classes.icon} src={iconTypes[type]} alt={type} />
+    );
   });
 
   return (
