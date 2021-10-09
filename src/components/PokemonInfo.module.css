@@ -60,10 +60,11 @@
   font-size: 1.2rem;
 }
 
-/* .types span:first-child {
-  margin-bottom: 10px;
-} */
+.types span:first-child {
+  /* padding-top: 5px; */
+}
 
-/* .types span:last-child {
-  margin-top: 10px;
-} */
+.types span:last-child {
+  display: flex;
+  margin-top: 5px;
+}

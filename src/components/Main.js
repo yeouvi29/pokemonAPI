@@ -70,11 +70,11 @@ const Main = () => {
       <Button
         className={`${classes["button-left"]} ${classes.buttons}`}
         name="prev"
-        onClick={prevClickHandler}
       >
         {pageData.prev && (
           <i
             className={`fas fa-chevron-left arrow ${classes["arrow-left"]}`}
+            onClick={prevClickHandler}
           ></i>
         )}
       </Button>
@@ -84,11 +84,11 @@ const Main = () => {
       <Button
         className={`${classes["button-right"]} ${classes.buttons}`}
         name="next"
-        onClick={nextClickHandler}
       >
         {pageData.next && (
           <i
             className={`fas fa-chevron-right arrow ${classes["arrow-right"]}`}
+            onClick={nextClickHandler}
           ></i>
         )}
       </Button>
