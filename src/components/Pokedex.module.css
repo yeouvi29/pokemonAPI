@@ -7,6 +7,14 @@
   align-items: center;
   position: relative;
   overflow: auto;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.cards--container::-webkit-scrollbar {
+  display: none;
 }
 
 .cards--container-inner {
@@ -19,7 +27,6 @@
   grid-template-columns: repeat(1, minmax(200px, 1fr));
   grid-gap: 20px;
   box-sizing: border-box;
-  /* overflow: auto; */
 }
 
 @media (min-width: 650px) {
