@@ -23,6 +23,13 @@ const PokemonCard = (props) => {
     setShowPokemonInfo(false);
   };
 
+  useEffect(() => {
+    if (showPokemonInfo) {
+      document.querySelector("body").style.position = "fixed";
+    } else {
+      document.querySelector("body").style.position = "relative";
+    }
+  }, [showPokemonInfo]);
   // when getting url from Pokedex component, fetching each Pokemon's data from pokeapi by the urls from Pokedex component
   useEffect(() => {
     const fetchPokemonInfo = async () => {
