@@ -1,16 +1,20 @@
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
-import Main from "./components/Main";
-
-import classes from "./App.module.css";
+import { Switch, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Main from "./pages/Main";
+import BlindQuiz from "./pages/BlindQuiz";
 
 function App() {
   return (
-    <div className={classes.app}>
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+    <Layout>
+      <Switch>
+        <Route path="/" exact>
+          <Main />
+        </Route>
+        <Route path="/blind-quiz">
+          <BlindQuiz />
+        </Route>
+      </Switch>
+    </Layout>
   );
 }
 

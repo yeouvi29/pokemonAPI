@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Button from "../UI/Button";
-import Pokedex from "./Pokedex";
+import Pokedex from "../components/Pokedex";
 import classes from "./Main.module.css";
 
 const Main = () => {
