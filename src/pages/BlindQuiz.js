@@ -36,7 +36,7 @@ const BlindQuiz = (props) => {
         <div className={classes["image-container"]}>
           <div className={classes.image}>
             {pokemonData.isFetching ? (
-              <i className={`fas fa-question ${classes.question}`}></i>
+              <i className={`fas fa-spinner ${classes.loading}`}></i>
             ) : (
               <img
                 className={`${classes.img} ${
@@ -47,7 +47,10 @@ const BlindQuiz = (props) => {
               />
             )}
           </div>
-          {btnText === "Next" ? (
+          {btnText === "Get Answer!" ||
+          (btnText === "Next" && pokemonData.isFetching) ? (
+            <p>Who's that pokemon?</p>
+          ) : (
             <p>
               It's{" "}
               <span>
@@ -55,8 +58,6 @@ const BlindQuiz = (props) => {
               </span>
               !
             </p>
-          ) : (
-            <p>Who's that pokemon?</p>
           )}
         </div>
 
