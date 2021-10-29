@@ -36,21 +36,19 @@ const Main = () => {
     }));
   };
 
-  // when the state of pageData.isFetching or pageData.currentUrl is changed, fetching the new data with the url that is stored in pageData.currentUrl 
+  // when the state of pageData.isFetching or pageData.currentUrl is changed, fetching the new data with the url that is stored in pageData.currentUrl
   useEffect(() => {
     const getPokemons = async (url) => {
       try {
-        fetch(url)
-          .then((res) => res.json())
-          .then((data) => {
-            setPageData({
-              isFetching: false,
-              currentUrl: "",
-              next: data.next,
-              prev: data.previous,
-              pokedexData: data.results,
-            });
-          });
+        const res = await fetch(url);
+        const data = await res.json();
+        setPageData({
+          isFetching: false,
+          currentUrl: "",
+          next: data.next,
+          prev: data.previous,
+          pokedexData: data.results,
+        });
       } catch (err) {
         setPageData((prevState) => ({
           isFetching: false,
@@ -62,7 +60,6 @@ const Main = () => {
         console.log(err.message);
       }
     };
-
     if (pageData.isFetching) getPokemons(pageData.currentUrl);
   }, [pageData.isFetching, pageData.currentUrl]);
 

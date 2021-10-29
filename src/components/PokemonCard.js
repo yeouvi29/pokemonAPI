@@ -66,9 +66,9 @@ const PokemonCard = (props) => {
         <ImageContainer color={props.color}>
           <PokemonImage imgUrl={pokemonData.imgUrl} name={pokemonData.name} />
         </ImageContainer>
-        <NameContainer>
+        {/* <NameContainer>
           <PokemonName name={pokemonData.name} />
-        </NameContainer>
+        </NameContainer> */}
       </div>
     </Fragment>
   );
