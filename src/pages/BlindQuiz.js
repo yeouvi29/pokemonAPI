@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import pokemon from "pokemon";
 import classes from "./BlindQuiz.module.css";
-
+const pokemonAll = pokemon.all();
+const pokemonLength = pokemonAll.length;
 const BlindQuiz = (props) => {
   const [pokemonData, setPokemonData] = useState({ isFetching: false });
   const [btnText, setBtnText] = useState("Get Answer!");
@@ -70,19 +71,22 @@ const BlindQuiz = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  const randomPokemon = pokemon.random().toLowerCase();
-  const res = await fetch(
-    `https://pokeapi.co/api/v2/pokemon/${randomPokemon}/`
-  );
-  const data = await res.json();
+  const randomPokemon =
+    pokemonAll[Math.trunc(Math.random() * pokemonLength)].toLowerCase();
 
-  if (!data) {
-    return {
-      notFound: true,
-    };
+  const fetchData = async () => {
+    const res = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${randomPokemon}/`
+    );
+    const data = await res.json();
+    return data.sprites.other["official-artwork"]["front_default"];
+  };
+  let imgUrl = await fetchData();
+  while (!imgUrl) {
+    imgUrl = await fetchData();
   }
 
-  const imgUrl = data.sprites.other["official-artwork"]["front_default"];
+  // const imgUrl = data.sprites.other["official-artwork"]["front_default"];
 
   return {
     props: {
@@ -91,4 +95,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
 export default BlindQuiz;
