@@ -3,59 +3,60 @@ import pokemon from "pokemon";
 import classes from "./BlindQuiz.module.css";
 const pokemonAll = pokemon.all();
 const pokemonLength = pokemonAll.length;
-const BlindQuiz = (props) => {
-  const [pokemonData, setPokemonData] = useState({ isFetching: false });
+const BlindQuiz = () => {
+  const [isFetching, setIsFetching] = useState(false);
+  const [pokemonData, setPokemonData] = useState([]);
   const [btnText, setBtnText] = useState("Get Answer!");
   const clickHandler = async () => {
     if (btnText === "Get Answer!") {
       setBtnText("Next");
     } else if (btnText === "Next") {
-      setPokemonData((prev) => ({
-        isFetching: true,
-        name: prev.name,
-        imgUrl: prev.imgUrl,
-      }));
-      const { props } = await getServerSideProps();
-      const { name, imgUrl } = props;
-      setPokemonData({ isFetching: false, name, imgUrl });
+      if (!pokemonData.length) {
+        setIsFetching(true);
+      }
+      setPokemonData((prev) => prev.slice(1));
       setBtnText("Get Answer!");
     }
   };
-
+  console.log(pokemonData);
   useEffect(() => {
-    const getprops = async () => {
+    const getProps = async () => {
       const { props } = await getServerSideProps();
       const { name, imgUrl } = props;
-      setPokemonData({ isFetching: false, name, imgUrl });
+      setPokemonData((prev) => prev.concat({ name, imgUrl }));
     };
-    getprops();
-  }, []);
+    if (pokemonData.length < 10) {
+      getProps();
+    } else if (pokemonData.length) {
+      setIsFetching(false);
+    }
+  }, [pokemonData.length]);
 
   return (
     <div className={classes.scroll}>
       <div className={classes["quiz-container"]}>
         <div className={classes["image-container"]}>
           <div className={classes.image}>
-            {pokemonData.isFetching ? (
+            {isFetching || !pokemonData.length ? (
               <i className={`fas fa-spinner ${classes.loading}`}></i>
             ) : (
               <img
                 className={`${classes.img} ${
                   btnText === "Next" && classes.reveal
                 }`}
-                src={pokemonData.imgUrl}
-                alt={pokemonData.name}
+                src={pokemonData[0].imgUrl}
+                alt={pokemonData[0].name}
               />
             )}
           </div>
-          {btnText === "Get Answer!" ||
-          (btnText === "Next" && pokemonData.isFetching) ? (
+          {btnText === "Get Answer!" || (btnText === "Next" && isFetching) ? (
             <p>Who's that pokemon?</p>
           ) : (
             <p>
               It's{" "}
               <span>
-                {pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}
+                {pokemonData[0].name[0].toUpperCase() +
+                  pokemonData[0].name.slice(1)}
               </span>
               !
             </p>
